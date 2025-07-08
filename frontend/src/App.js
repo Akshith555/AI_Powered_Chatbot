@@ -13,7 +13,8 @@ function App() {
     setMessages(msgs => [...msgs, { sender: "user", text: userMsg }]);
     setInput("");
     try {
-      const res = await axios.post("http://localhost:8000/chat", { question: userMsg });
+      const backendUrl = process.env.REACT_APP_BACKEND_URL;
+      const res = await axios.post(`${backendUrl}/chat`, { question: userMsg });
       setMessages(msgs => [...msgs, { sender: "user", text: userMsg }, { sender: "bot", text: res.data.answer }]);
     } catch {
       setMessages(msgs => [...msgs, { sender: "bot", text: "Error: Could not reach backend." }]);
